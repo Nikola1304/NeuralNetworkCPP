@@ -3,7 +3,7 @@
 #include <cmath>   
 
 Neuron::Neuron(int prevLayerSize) {
-    _weights = new std::vector<double>(prevLayerSize + 1, 0.0); 
+    _weights = new std::vector<double>(prevLayerSize, 0.0); 
     _output = 0;
     _delta = 0;
     _activation = 0;
