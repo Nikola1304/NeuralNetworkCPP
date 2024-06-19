@@ -301,9 +301,9 @@ int main()
     std::vector<std::vector<double>> x_test = traintest.at(2);
     std::vector<std::vector<double>> y_test = traintest.at(3);
 
-    NeuralNetwork* neuronska = new NeuralNetwork({ 3,4,5,7,2 }, x_train.at(0).size(), y_train.at(0).size(), 0.01);
+    NeuralNetwork* neuronska = new NeuralNetwork({ 5, 5, 5, 5, 5 }, x_train.at(0).size(), y_train.at(0).size(), 10e-6);
 
-    neuronska->train(x_train, y_train, x_test, y_test, 10);
+    neuronska->train(x_train, y_train, x_test, y_test, 200);
 
     std::cout << "Hello World!\n";
 }

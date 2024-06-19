@@ -1,4 +1,5 @@
 #include "Layer.h"
+#include <iostream>
 
 Layer::Layer(int prevLayerSize, int layerSize) {
 

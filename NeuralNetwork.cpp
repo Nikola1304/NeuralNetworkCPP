@@ -130,10 +130,12 @@ void NeuralNetwork::update_weights(std::vector<double>& input, std::vector<doubl
 			// popravka svih tezina gradijentnim spustom
 			for (int k = 0; k < inputs.size(); k++) {
 				n->get_weights()->at(k) += this->_learning_rate * n->get_delta() * inputs.at(k);
+				// std::cout << n->get_delta() << std::endl;
 			}
 
 			// bias
 			n->get_weights()->back() += this->_learning_rate * n->get_delta();
+			
 		}
 
 		inputs.clear();
@@ -163,7 +165,6 @@ void NeuralNetwork::train(std::vector<std::vector<double>>& input,
 
 		// test set, train set
 		double testError = test(test_input, test_output);
-
 		std::cout << "Training epoch: " << (i + 1) << " MSE: " << totalErr
 			<< "Test MSE: " << testError << std::endl;
 	}

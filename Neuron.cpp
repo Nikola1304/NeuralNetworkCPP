@@ -1,9 +1,11 @@
 #include "Neuron.h"
+#include <iostream>
 #include <cstdlib>
 #include <cmath>   
 
 Neuron::Neuron(int prevLayerSize) {
-    _weights = new std::vector<double>(prevLayerSize, 0.0); 
+    _weights = new std::vector<double>(prevLayerSize, 0.0);
+    initialize_weights(prevLayerSize);
     _output = 0;
     _delta = 0;
     _activation = 0;
@@ -18,7 +20,7 @@ Neuron::Neuron(const Neuron& nn) {
     this->_output = nn._output;
     _activation = nn._activation;
 
-    _weights = new std::vector<double>(*nn._weights); 
+    _weights = new std::vector<double>(*nn._weights);
 }
 
 Neuron& Neuron::operator=(const Neuron& nn) {
@@ -29,7 +31,7 @@ Neuron& Neuron::operator=(const Neuron& nn) {
     this->_output = nn._output;
     _activation = nn._activation;
 
-    *_weights = *nn._weights; 
+    *_weights = *nn._weights;
 
     return *this;
 }
@@ -40,9 +42,9 @@ double Neuron::rand_num(double min, double max) {
 }
 
 void Neuron::initialize_weights(int prevLayerSize) {
-    _weights->resize(prevLayerSize + 1); 
+    _weights->resize(prevLayerSize + 1);
     for (int i = 0; i < prevLayerSize + 1; i++) {
-        _weights->at(i) = rand_num(-1, 1); 
+        _weights->at(i) = rand_num(-1, 1);
     }
 }
 
