@@ -25,10 +25,10 @@ public:
 	void back_propagate(std::vector<double>& input, std::vector<double>& output);
 	void update_weights(std::vector<double>& input, std::vector<double>& output);
 
-	void train(std::vector<std::vector<double>>& input, std::vector<std::vector<double>>& output,
-		std::vector<std::vector<double>>& test_input,
-		std::vector<std::vector<double>>& test_output, int epochs);
-	double test(std::vector<std::vector<double>>& input, std::vector<std::vector<double>>& output);
+	void train(std::vector<std::vector<double>>* input, std::vector<std::vector<double>>* output,
+		std::vector<std::vector<double>>* test_input,
+		std::vector<std::vector<double>>* test_output, int epochs);
+	double test(std::vector<std::vector<double>>* input, std::vector<std::vector<double>>* output);
 };
 
 

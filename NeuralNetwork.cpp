@@ -142,26 +142,26 @@ void NeuralNetwork::update_weights(std::vector<double>& input, std::vector<doubl
 	}
 }
 
-void NeuralNetwork::train(std::vector<std::vector<double>>& input,
-	std::vector<std::vector<double>>& output,
-	std::vector<std::vector<double>>& test_input,
-	std::vector<std::vector<double>>& test_output, int epochs) {
+void NeuralNetwork::train(std::vector<std::vector<double>>* input,
+	std::vector<std::vector<double>>* output,
+	std::vector<std::vector<double>>* test_input,
+	std::vector<std::vector<double>>* test_output, int epochs) {
 
 	for (int i = 0; i < epochs; i++) {
 		double totalErr = 0;
 
-		for (int j = 0; j < input.size(); j++) {
+		for (int j = 0; j < input->size(); j++) {
 			double err = 0;
-			std::vector<double> pred = this->forward_propagate(input.at(j));
-			for (int k = 0; k < output[j].size(); k++) {
-				err += (pred[k] - output[j][k]) * (pred[k] - output[j][k]);
+			std::vector<double> pred = this->forward_propagate(input->at(j));
+			for (int k = 0; k < output->at(j).size(); k++) {
+				err += (pred[k] - output->at(j)[k]* (pred[k] - output->at(j)[k]));
 			}
 			totalErr += err;
 
-			this->back_propagate(input[j], output[j]);
-			this->update_weights(input[j], output[j]);
+			this->back_propagate(input->at(j), output->at(j));
+			this->update_weights(input->at(j), output->at(j));
 		}
-		totalErr /= input.size();
+		totalErr /= input->size();
 
 		// test set, train set
 		double testError = test(test_input, test_output);
@@ -170,19 +170,19 @@ void NeuralNetwork::train(std::vector<std::vector<double>>& input,
 	}
 }
 
-double NeuralNetwork::test(std::vector<std::vector<double>>& input, std::vector<std::vector<double>>& output) {
+double NeuralNetwork::test(std::vector<std::vector<double>>* input, std::vector<std::vector<double>>* output) {
 
 	double totalErr = 0;
 
-	for (int j = 0; j < input.size(); j++) {
+	for (int j = 0; j < input->size(); j++) {
 		double err = 0;
-		std::vector<double> pred = this->forward_propagate(input.at(j));
-		for (int k = 0; k < output[j].size(); k++) {
-			err += (pred[k] - output[j][k]) * (pred[k] - output[j][k]);
+		std::vector<double> pred = this->forward_propagate(input->at(j));
+		for (int k = 0; k < output->at(j).size(); k++) {
+			err += (pred[k] - output->at(j)[k]) * (pred[k] - output->at(j)[k]);
 		}
 		totalErr += err;
 	}
-	totalErr /= input.size();
+	totalErr /= input->size();
 
 	return totalErr;
 }

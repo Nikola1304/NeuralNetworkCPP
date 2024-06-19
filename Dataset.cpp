@@ -15,8 +15,8 @@ Dataset::Dataset(std::vector<std::vector<double>>& dataset, Tip t) {
 	skaliraj(t);
 	csvier(_x_train, "xtrain");
 	csvier(_y_train, "ytrain");
-	csvier(_x_test,"xtest");
-	csvier(_y_test,"ytest");
+	csvier(_x_test, "xtest");
+	csvier(_y_test, "ytest");
 }
 
 Dataset::~Dataset() {
@@ -45,9 +45,9 @@ void Dataset::podeli(std::vector<std::vector<double>>& dataset) {
 		}
 		else {
 
-			 _x_train->push_back(dataset.at(i));
+			_x_train->push_back(dataset.at(i));
 
-			_y_train->push_back({ _x_train->back().back()});
+			_y_train->push_back({ _x_train->back().back() });
 
 			_x_train->back().pop_back();
 		}
