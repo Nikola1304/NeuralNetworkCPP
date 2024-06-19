@@ -2,7 +2,16 @@
 
 Dataset::Dataset(std::vector<std::vector<double>>& dataset, Tip t) {
 
+	_x_train = new std::vector<std::vector<double>>;
+	_y_train = new std::vector<std::vector<double>>;
+	_x_test = new std::vector<std::vector<double>>;
+	_y_test = new std::vector<std::vector<double>>;
+
 	podeli(dataset);
+
+	// std::cout << "XTRAIN: " << _x_train->size() << " | YTRAIN: " << _y_train->size() << std::endl;
+	// std::cout << "XTEST: " << _x_test->size() << " | YTEST: " << _y_test->size() << std::endl;
+
 	skaliraj(t);
 	csvier(_x_train, "xtrain");
 	csvier(_y_train, "ytrain");
@@ -30,18 +39,17 @@ void Dataset::podeli(std::vector<std::vector<double>>& dataset) {
 
 			_x_test->push_back(dataset.at(i));
 
-			_y_test->push_back({ _x_test->at(i).back() });
+			_y_test->push_back({ _x_test->back().back() });
 
-			_x_test->pop_back();
+			_x_test->back().pop_back();
 		}
 		else {
 
-			// umire ovde
-			_x_train->push_back(dataset.at(i));
+			 _x_train->push_back(dataset.at(i));
 
-			_y_train->push_back({ _x_train->at(i).back() });
+			_y_train->push_back({ _x_train->back().back()});
 
-			_x_train->pop_back();
+			_x_train->back().pop_back();
 		}
 	}
 }
