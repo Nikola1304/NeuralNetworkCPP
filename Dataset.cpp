@@ -13,10 +13,10 @@ Dataset::Dataset(std::vector<std::vector<double>>& dataset, Tip t) {
 	// std::cout << "XTEST: " << _x_test->size() << " | YTEST: " << _y_test->size() << std::endl;
 
 	skaliraj(t);
-	csvier(_x_train, "xtrain");
-	csvier(_y_train, "ytrain");
-	csvier(_x_test, "xtest");
-	csvier(_y_test, "ytest");
+	// csvier(_x_train, "xtrain");
+	// csvier(_y_train, "ytrain");
+	// csvier(_x_test, "xtest");
+	// csvier(_y_test, "ytest");
 }
 
 Dataset::~Dataset() {
@@ -117,7 +117,6 @@ void Dataset::skaliraj(Tip t) {
 		// kada imamo 4 opcije, 1 = 1 0 0 0 ; 2 = 0 1 0 0 ; 3 = 0 0 1 0 ; 4 = 0 0 0 1
 		// trazimo max i na osnovu njega odredjujemo broj elemenata vektora
 
-		// mozda olaksa nesto?
 		int i_kol = 0;
 
 		double max_y = -1;

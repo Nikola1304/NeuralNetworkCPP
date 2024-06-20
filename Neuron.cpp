@@ -95,7 +95,6 @@ double Neuron::transfer(double x) {
     // _activation = 1.0 / (1.0 + exp(-x)); // Sigmoid
     // return _activation; // Sigmoid
     _activation = _act_f->activation(x);
-    //std::cout << "Aktivacija: " << _activation << std::endl;
     return _activation;
 }
 
@@ -103,8 +102,6 @@ double Neuron::transfer_derivative(double act) {
     // act = sigma(x);
     // sigma'(x) = sigma(x) * (1 - sigma(x))
     // return act * (1 - act);
-
-    //std::cout << "Izvod: " << _act_f->derivative(act) << std::endl;
     return _act_f->derivative(act);
 
     // act = relu(x)

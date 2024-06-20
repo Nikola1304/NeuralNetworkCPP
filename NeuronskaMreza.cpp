@@ -90,16 +90,14 @@ std::vector<std::vector<double>> readIris(std::string fileName) {
 int main()
 {
 
-    std::vector<std::vector<double>> dataset = readHousing("housing.csv"); Tip t = Tip::Regression;
+    // std::vector<std::vector<double>> dataset = readHousing("housing.csv"); Tip t = Tip::Regression;
 
-    // std::vector<std::vector<double>> dataset = readIris("Iris.csv"); Tip t = Tip::Classification;
+    std::vector<std::vector<double>> dataset = readIris("Iris.csv"); Tip t = Tip::Classification;
 
 
     Dataset d(dataset, t);
 
     NeuralNetwork* neuronska = new NeuralNetwork(t, { 5, 8, 5, 6, 5, 4 }, d.get_x_train()->at(0).size(), d.get_y_train()->at(0).size(), 10e-6);
-
-    // NeuralNetwork* neuronska = new NeuralNetwork(t, { 5, 5, 5, 5, 5, 5 }, d.get_x_train()->at(0).size(), d.get_y_train()->at(0).size(), 10e-6);
 
     neuronska->train(d.get_x_train(), d.get_y_train(), d.get_x_test(), d.get_y_test(), 200);
 
