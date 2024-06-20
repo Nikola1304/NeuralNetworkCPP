@@ -3,6 +3,9 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
+#include <iostream>
+#include <fstream>
+#include <string>
 #include "Tip.h"
 #include "ActFactory.h"
 

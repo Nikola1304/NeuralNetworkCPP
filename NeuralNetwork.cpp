@@ -160,11 +160,11 @@ void NeuralNetwork::update_weights(std::vector<double>& input, std::vector<doubl
 
 			// Update weights using gradient descent
 			for (int k = 0; k < inputs.size(); k++) {
-				n->get_weights()->at(k) += this->_learning_rate * n->get_delta() * inputs.at(k);
+				n->get_weights()->at(k) -= this->_learning_rate * n->get_delta() * inputs.at(k);
 			}
 
 			// Update the bias
-			n->get_weights()->back() += this->_learning_rate * n->get_delta();
+			n->get_weights()->back() -= this->_learning_rate * n->get_delta();
 
 			// Collect the output of the current neuron to be used as input for the next layer
 			new_inputs.push_back(n->get_output());
@@ -180,9 +180,13 @@ void NeuralNetwork::train(std::vector<std::vector<double>>* input,
 	std::vector<std::vector<double>>* test_input,
 	std::vector<std::vector<double>>* test_output, int epochs) {
 
+	std::ofstream trainFile("train_err.txt");
+	std::ofstream testFile("test_err.txt");
+
 	for (int i = 0; i < epochs; i++) {
 		double totalErr = 0;
-
+		//int j = 0;
+		//for(int z = 0; z < input->size();z++) {
 		for (int j = 0; j < input->size(); j++) {
 			double err = 0;
 			std::vector<double> pred = this->forward_propagate(input->at(j));
@@ -200,13 +204,21 @@ void NeuralNetwork::train(std::vector<std::vector<double>>* input,
 		double testError = test(test_input, test_output);
 		std::cout << "Training epoch: " << (i + 1) << " MSE: " << totalErr
 			<< "Test MSE: " << testError << std::endl;
+
+		trainFile << totalErr << std::endl;
+		testFile << testError << std::endl;
+		
 	}
+
+	trainFile.close();
+	testFile.close();
 }
 
 double NeuralNetwork::test(std::vector<std::vector<double>>* input, std::vector<std::vector<double>>* output) {
 
 	double totalErr = 0;
-
+	//int j = 0;
+	//for(int k = 0; k < input->size(); k++) {
 	for (int j = 0; j < input->size(); j++) {
 		double err = 0;
 		std::vector<double> pred = this->forward_propagate(input->at(j));

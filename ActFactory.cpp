@@ -25,16 +25,16 @@ double Sigmoid::derivative(double act) {
 }
 
 double LeakyReLu::activation(double x) {
-	if (x > 0)
-		return x;
-	else
-		return _alpha * x;
-
+	if (x > 0) return x;
+	else return _alpha * x;
 }
 
 double LeakyReLu::derivative(double act) {
 
-	return act > 0 ? 1 : _alpha;
+	// return act > 0 ? 1 : _alpha;
+	if (act > 0) return 1;
+	else if (act < 0) return _alpha;
+	else return 0;
 }
 
 ActFun* ActFactory::createAct(Tip t) {

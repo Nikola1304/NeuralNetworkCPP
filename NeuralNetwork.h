@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Layer.h"
-#include <iostream>
 
 class NeuralNetwork
 {
