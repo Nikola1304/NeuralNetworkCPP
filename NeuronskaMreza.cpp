@@ -4,6 +4,7 @@
 #include <string>
 #include "NeuralNetwork.h"
 #include "Dataset.h"
+#include "Tip.h"
 
 std::vector<std::vector<double>> readHousing(std::string fileName) {
     std::ifstream file(fileName);
@@ -89,14 +90,14 @@ std::vector<std::vector<double>> readIris(std::string fileName) {
 int main()
 {
 
-    // housing ne radi, popravi
+    // std::vector<std::vector<double>> dataset = readHousing("housing.csv"); Tip t = Tip::Regression;
 
-    // std::vector<std::vector<double>> dataset = readHousing("housing.csv");
-    std::vector<std::vector<double>> dataset = readIris("Iris.csv");
+    std::vector<std::vector<double>> dataset = readIris("Iris.csv"); Tip t = Tip::Classification;
 
-    Dataset d(dataset, Tip::Classification);
 
-    NeuralNetwork* neuronska = new NeuralNetwork({ 5, 5, 5, 5, 5 }, d.get_x_train()->at(0).size(), d.get_y_train()->at(0).size(), 10e-6);
+    Dataset d(dataset, t);
+
+    NeuralNetwork* neuronska = new NeuralNetwork(t, { 5, 8, 5, 6, 5 }, d.get_x_train()->at(0).size(), d.get_y_train()->at(0).size(), 10e-6);
 
     neuronska->train(d.get_x_train(), d.get_y_train(), d.get_x_test(), d.get_y_test(), 200);
 

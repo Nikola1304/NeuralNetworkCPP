@@ -10,7 +10,7 @@ private:
 	int _layerSize; // bez biasa
 
 public:
-	Layer(int prevLayerSize, int layerSize);
+	Layer(Tip t, int prevLayerSize, int layerSize);
 
 	~Layer();
 	Layer(const Layer& ll);

@@ -10,7 +10,7 @@ private:
 	double _learning_rate;
 
 public:
-	NeuralNetwork(const std::vector<int>& hiddenLayerSpec, int numFeatures, int numClasses, double lr);
+	NeuralNetwork(Tip t, const std::vector<int>& hiddenLayerSpec, int numFeatures, int numClasses, double lr);
 
 	~NeuralNetwork();
 	NeuralNetwork(const NeuralNetwork& ann);

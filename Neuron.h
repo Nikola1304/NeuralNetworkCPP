@@ -3,6 +3,8 @@
 #include <vector>
 #include <cstdlib>
 #include <cmath>
+#include "Tip.h"
+#include "ActFactory.h"
 
 class Neuron
 {
@@ -11,12 +13,13 @@ private:
 	double _output;
 	double _activation;
 	double _delta;
+	ActFun* _act_f;
 
 	void initialize_weights(int prevLayerSize);
 	double rand_num(double min, double max);
 
 public:
-	Neuron(int prevLayerSize);
+	Neuron(Tip t, int prevLayerSize);
 
 	~Neuron();
 	Neuron(const Neuron& nn);

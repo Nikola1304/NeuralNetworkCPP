@@ -6,11 +6,7 @@
 #include <fstream>
 #include <string>
 
-enum class Tip
-{
-	Regression,
-	Classification
-};
+#include "Tip.h"
 
 class Dataset
 {

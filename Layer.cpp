@@ -1,14 +1,14 @@
 #include "Layer.h"
 #include <iostream>
 
-Layer::Layer(int prevLayerSize, int layerSize) {
+Layer::Layer(Tip t, int prevLayerSize, int layerSize) {
 
 	_neurons = new std::vector<Neuron*>();
 	_outputs = new std::vector<double>();
 	_layerSize = layerSize;
 
 	for (int i = 0; i < _layerSize; i++) {
-		_neurons->push_back(new Neuron(prevLayerSize));
+		_neurons->push_back(new Neuron(t, prevLayerSize));
 		_outputs->push_back(0.0);
 	}
 }

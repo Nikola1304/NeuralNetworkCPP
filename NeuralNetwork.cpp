@@ -1,6 +1,6 @@
 #include "NeuralNetwork.h"
 
-NeuralNetwork::NeuralNetwork(const std::vector<int>& hiddenLayerSpec, int numFeatures, int numClasses, double lr) {
+NeuralNetwork::NeuralNetwork(Tip t, const std::vector<int>& hiddenLayerSpec, int numFeatures, int numClasses, double lr) {
 
 	_learning_rate = lr;
 	_layers = new std::vector<Layer*>();
@@ -9,16 +9,16 @@ NeuralNetwork::NeuralNetwork(const std::vector<int>& hiddenLayerSpec, int numFea
 
 		// input_layer
 		if (i == 0) {
-			_layers->push_back(new Layer(numFeatures, hiddenLayerSpec[i]));
+			_layers->push_back(new Layer(t, numFeatures, hiddenLayerSpec[i]));
 		}
 		// hidden layers
 		else {
-			_layers->push_back(new Layer(hiddenLayerSpec[i - 1], hiddenLayerSpec[i]));
+			_layers->push_back(new Layer(t, hiddenLayerSpec[i - 1], hiddenLayerSpec[i]));
 		}
 	}
 
 	// output layer
-	_layers->push_back(new Layer(hiddenLayerSpec.back(), numClasses));
+	_layers->push_back(new Layer(t, hiddenLayerSpec.back(), numClasses));
 }
 
 NeuralNetwork::~NeuralNetwork() {
@@ -109,36 +109,69 @@ void NeuralNetwork::back_propagate(std::vector<double>& input, std::vector<doubl
 	}
 }
 
+//void NeuralNetwork::update_weights(std::vector<double>& input, std::vector<double>& output) {
+//
+//	std::vector<double> inputs = input;
+//	for (int i = 0; i < _layers->size(); i++) {
+//
+//		// razdvajanje "ulaznog" sloja od ostalih
+//		// podaci za ulazni sloj su dati argumenom input
+//		// dok za unutrasnje slojeve mi moramo da proglasimo sta su ulazi
+//		if (i != 0) {
+//			for (int j = 0; j < _layers->at(i)->get_neurons()->size(); j++) {
+//				inputs.push_back(_layers->at(i)->get_neurons()->at(j)->get_output());
+//			}
+//		}
+//
+//		// gradijentni spust
+//		for (int j = 0; j < _layers->at(i)->get_neurons()->size(); j++) {
+//			Neuron* n = _layers->at(i)->get_neurons()->at(j);
+//
+//			// popravka svih tezina gradijentnim spustom
+//			for (int k = 0; k < inputs.size(); k++) {
+//				n->get_weights()->at(k) += this->_learning_rate * n->get_delta() * inputs.at(k);
+//				// std::cout << n->get_delta() << std::endl;
+//			}
+//
+//			// bias
+//			n->get_weights()->back() += this->_learning_rate * n->get_delta();
+//			
+//		}
+//
+//		inputs.clear();
+//	}
+//}
+
 void NeuralNetwork::update_weights(std::vector<double>& input, std::vector<double>& output) {
 
+	// Initial input to the network
 	std::vector<double> inputs = input;
+	std::vector<double> new_inputs;
+
+	// Loop through each layer
 	for (int i = 0; i < _layers->size(); i++) {
 
-		// razdvajanje "ulaznog" sloja od ostalih
-		// podaci za ulazni sloj su dati argumenom input
-		// dok za unutrasnje slojeve mi moramo da proglasimo sta su ulazi
-		if (i != 0) {
-			for (int j = 0; j < _layers->at(i)->get_neurons()->size(); j++) {
-				inputs.push_back(_layers->at(i)->get_neurons()->at(j)->get_output());
-			}
-		}
+		// Create a new vector for storing inputs for the next layer
+		new_inputs.clear();
 
-		// gradijentni spust
+		// Loop through each neuron in the current layer
 		for (int j = 0; j < _layers->at(i)->get_neurons()->size(); j++) {
 			Neuron* n = _layers->at(i)->get_neurons()->at(j);
 
-			// popravka svih tezina gradijentnim spustom
+			// Update weights using gradient descent
 			for (int k = 0; k < inputs.size(); k++) {
 				n->get_weights()->at(k) += this->_learning_rate * n->get_delta() * inputs.at(k);
-				// std::cout << n->get_delta() << std::endl;
 			}
 
-			// bias
+			// Update the bias
 			n->get_weights()->back() += this->_learning_rate * n->get_delta();
-			
+
+			// Collect the output of the current neuron to be used as input for the next layer
+			new_inputs.push_back(n->get_output());
 		}
 
-		inputs.clear();
+		// Set inputs to the outputs of the current layer for the next iteration
+		inputs = new_inputs;
 	}
 }
 
